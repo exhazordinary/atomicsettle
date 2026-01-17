@@ -48,17 +48,71 @@ atomicsettle/
 
 ## Quick Start
 
-### Running a Local Test Network
+### Prerequisites
+
+- Rust toolchain (1.70+): `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+
+### Running the Simulator
+
+The simulator creates a test environment with simulated banks that execute settlements.
 
 ```bash
-# Start coordinator cluster
-cargo run --bin coordinator -- --config config/local.toml
+cd simulator
 
-# Start simulated banks
-cargo run --bin simulator -- --banks 3 --scenario simple
+# Run with 3 simulated banks for 10 seconds
+cargo run --bin simulator -- --banks 3 --duration 10
 
-# Send a test settlement
-cargo run --example simple_settlement
+# Run with 5 banks continuously (Ctrl+C to stop)
+cargo run --bin simulator -- --banks 5
+
+# Run with faster simulation (2x speed)
+cargo run --bin simulator -- --banks 3 --speed 2.0
+
+# Run with reproducible results
+cargo run --bin simulator -- --banks 3 --seed 12345
+```
+
+**Example output:**
+```
+INFO simulator: Starting AtomicSettle Simulator
+INFO simulator: Banks: 3
+INFO simulator::controller: Initialized bank BANK_A with $100000000 balance
+INFO simulator::controller: Initialized bank BANK_B with $100000000 balance
+INFO simulator::controller: Initialized bank BANK_C with $100000000 balance
+INFO simulator::controller: Generating settlement: BANK_C -> BANK_B for $772711
+INFO simulator::controller: Generating settlement: BANK_A -> BANK_C for $493063
+INFO simulator: Simulation complete
+INFO simulator: Total settlements: 5
+INFO simulator: Successful: 5
+INFO simulator: Average latency: 301ms
+```
+
+### Simulator CLI Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-b, --banks <N>` | Number of simulated banks | 3 |
+| `-s, --scenario <NAME>` | Scenario to run (simple-settlement, multi-currency, etc.) | none |
+| `--duration <SECS>` | Run duration in seconds (0 = infinite) | 0 |
+| `--speed <MULT>` | Simulation speed multiplier | 1.0 |
+| `--seed <NUM>` | Random seed for reproducibility | random |
+| `--visualizer` | Enable web dashboard | false |
+| `--visualizer-port <PORT>` | Web dashboard port | 8888 |
+
+### Running Tests
+
+```bash
+# Run all tests in reference implementation
+cd reference
+cargo test
+
+# Run simulator tests
+cd simulator
+cargo test
+
+# Run tests for a specific crate
+cargo test -p atomicsettle-crypto
+cargo test -p atomicsettle-fx
 ```
 
 ### Using the Python SDK
