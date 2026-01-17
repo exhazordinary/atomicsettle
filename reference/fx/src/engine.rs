@@ -206,7 +206,7 @@ impl FxEngine {
     /// Validate that spread is within acceptable limits.
     fn validate_spread(&self, rate: &FxRate) -> FxResult<()> {
         let spread_bps = rate.spread_bps();
-        let spread_u32 = spread_bps.to_string().parse::<u32>().unwrap_or(0);
+        let spread_u32 = spread_bps.trunc().to_string().parse::<u32>().unwrap_or(0);
 
         if spread_u32 > self.config.max_spread_bps {
             return Err(FxError::SpreadTooWide {
@@ -253,7 +253,11 @@ mod tests {
             "TEST",
         ));
 
-        FxEngine::new(provider, FxEngineConfig::default())
+        let config = FxEngineConfig {
+            max_spread_bps: 300, // Allow wider spread for test data
+            ..Default::default()
+        };
+        FxEngine::new(provider, config)
     }
 
     #[tokio::test]
