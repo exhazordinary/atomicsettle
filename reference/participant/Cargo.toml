@@ -1,0 +1,25 @@
+[package]
+name = "atomicsettle-participant"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "AtomicSettle participant client library for banks"
+
+[dependencies]
+atomicsettle-common = { path = "../common" }
+atomicsettle-crypto = { path = "../crypto" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tonic = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+rust_decimal = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tokio-test = { workspace = true }
