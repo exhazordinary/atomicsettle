@@ -101,7 +101,7 @@ async fn main() -> anyhow::Result<()> {
     info!("Total settlements: {}", metrics.total_settlements);
     info!("Successful: {}", metrics.successful_settlements);
     info!("Failed: {}", metrics.failed_settlements);
-    info!("Average latency: {}ms", metrics.average_latency_ms);
+    info!("Average latency: {}ms", metrics.average_latency_ms());
 
     Ok(())
 }
