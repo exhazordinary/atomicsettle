@@ -25,3 +25,5 @@ rand = "0.8"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
 clap = { version = "4.4", features = ["derive"] }
+anyhow = "1.0"
+futures = "0.3"
