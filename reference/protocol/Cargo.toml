@@ -1,0 +1,23 @@
+[package]
+name = "atomicsettle-protocol"
+description = "Protocol message types for AtomicSettle"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+atomicsettle-common = { path = "../common" }
+
+serde.workspace = true
+prost.workspace = true
+prost-types.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+rust_decimal.workspace = true
+thiserror.workspace = true
+
+[build-dependencies]
+prost-build.workspace = true
