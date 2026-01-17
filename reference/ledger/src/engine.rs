@@ -13,7 +13,7 @@ use crate::journal::{EntryType, JournalEntry};
 
 /// The ledger engine manages double-entry bookkeeping for settlements.
 pub struct LedgerEngine {
-    /// Database connection pool (placeholder).
+    // Database connection pool (placeholder).
     // db: sqlx::PgPool,
 }
 
