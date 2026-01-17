@@ -1,0 +1,36 @@
+[package]
+name = "atomicsettle-coordinator"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "AtomicSettle settlement coordinator node"
+
+[[bin]]
+name = "coordinator"
+path = "src/main.rs"
+
+[dependencies]
+atomicsettle-common = { path = "../common" }
+atomicsettle-ledger = { path = "../ledger" }
+atomicsettle-crypto = { path = "../crypto" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sqlx = { workspace = true }
+tonic = { workspace = true }
+tower = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+rust_decimal = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+dashmap = { workspace = true }
+parking_lot = { workspace = true }
+
+[dev-dependencies]
+tokio-test = { workspace = true }
+proptest = { workspace = true }
