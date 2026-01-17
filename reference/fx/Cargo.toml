@@ -1,0 +1,28 @@
+[package]
+name = "atomicsettle-fx"
+description = "FX rate engine for AtomicSettle protocol"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+atomicsettle-common = { path = "../common" }
+
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+rust_decimal.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+dashmap.workspace = true
+parking_lot.workspace = true
+uuid.workspace = true
+async-trait = "0.1"
+
+[dev-dependencies]
+tokio-test.workspace = true
+proptest.workspace = true
