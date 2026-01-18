@@ -1,11 +1,11 @@
 //! Rate locking for guaranteed conversion rates.
 
-use atomicsettle_common::{CurrencyPair, FxRate};
+use atomicsettle_common::FxRate;
 use chrono::{DateTime, Duration, Utc};
 use dashmap::DashMap;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
-use tracing::{debug, warn};
+use tracing::debug;
 use uuid::Uuid;
 
 use crate::error::{FxError, FxResult};
@@ -282,7 +282,7 @@ pub type SharedRateLockManager = Arc<RateLockManager>;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use atomicsettle_common::Currency;
+    use atomicsettle_common::{Currency, CurrencyPair};
     use rust_decimal_macros::dec;
 
     fn make_test_rate() -> FxRate {

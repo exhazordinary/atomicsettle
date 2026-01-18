@@ -10,10 +10,13 @@ use crate::handler::IncomingMessage;
 /// Connection to the coordinator.
 pub struct CoordinatorConnection {
     /// Coordinator URL.
+    #[allow(dead_code)]
     url: String,
     /// Participant ID.
+    #[allow(dead_code)]
     participant_id: ParticipantId,
     /// Protocol version.
+    #[allow(dead_code)]
     protocol_version: String,
     /// Connection state.
     connected: bool,
@@ -58,11 +61,11 @@ impl CoordinatorConnection {
     /// Send settlement request.
     pub async fn send_settlement_request(
         &self,
-        to_participant: ParticipantId,
-        amount: Money,
-        purpose: String,
-        remittance_info: Option<String>,
-        idempotency_key: String,
+        _to_participant: ParticipantId,
+        _amount: Money,
+        _purpose: String,
+        _remittance_info: Option<String>,
+        _idempotency_key: String,
     ) -> Result<Settlement> {
         if !self.connected {
             return Err(AtomicSettleError::NetworkError("Not connected".to_string()));
@@ -81,7 +84,7 @@ impl CoordinatorConnection {
     }
 
     /// Query balance for a currency.
-    pub async fn query_balance(&self, currency: Currency) -> Result<Balance> {
+    pub async fn query_balance(&self, _currency: Currency) -> Result<Balance> {
         if !self.connected {
             return Err(AtomicSettleError::NetworkError("Not connected".to_string()));
         }
@@ -93,7 +96,7 @@ impl CoordinatorConnection {
     }
 
     /// Get settlement by ID.
-    pub async fn get_settlement(&self, settlement_id: SettlementId) -> Result<Settlement> {
+    pub async fn get_settlement(&self, _settlement_id: SettlementId) -> Result<Settlement> {
         if !self.connected {
             return Err(AtomicSettleError::NetworkError("Not connected".to_string()));
         }

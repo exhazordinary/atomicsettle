@@ -2,10 +2,8 @@
 //!
 //! Test environment for banks and developers to test integration.
 
-use std::sync::Arc;
-
 use clap::Parser;
-use tracing::{info, error};
+use tracing::info;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 mod bank;

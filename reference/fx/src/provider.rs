@@ -1,7 +1,7 @@
 //! Rate provider traits and implementations.
 
 use async_trait::async_trait;
-use atomicsettle_common::{Currency, CurrencyPair, FxRate};
+use atomicsettle_common::{CurrencyPair, FxRate};
 use rust_decimal::Decimal;
 use std::sync::Arc;
 use tracing::{debug, warn};
@@ -60,7 +60,7 @@ impl AggregatedRateProvider {
 
         if rates.len() % 2 == 0 && rates.len() > 1 {
             // Average of two middle values
-            let mid = (rates[mid_idx - 1].mid + rates[mid_idx].mid) / Decimal::TWO;
+            let _mid = (rates[mid_idx - 1].mid + rates[mid_idx].mid) / Decimal::TWO;
             let bid = (rates[mid_idx - 1].bid + rates[mid_idx].bid) / Decimal::TWO;
             let ask = (rates[mid_idx - 1].ask + rates[mid_idx].ask) / Decimal::TWO;
 
@@ -171,13 +171,13 @@ impl RateProvider for AggregatedRateProvider {
 }
 
 /// Mock rate provider for testing.
-#[cfg(any(test, feature = "test-utils"))]
+#[cfg(test)]
 pub struct MockRateProvider {
     name: String,
     rates: dashmap::DashMap<String, FxRate>,
 }
 
-#[cfg(any(test, feature = "test-utils"))]
+#[cfg(test)]
 impl MockRateProvider {
     /// Create a new mock provider.
     pub fn new(name: impl Into<String>) -> Self {
@@ -194,7 +194,7 @@ impl MockRateProvider {
     }
 }
 
-#[cfg(any(test, feature = "test-utils"))]
+#[cfg(test)]
 #[async_trait]
 impl RateProvider for MockRateProvider {
     fn name(&self) -> &str {
@@ -222,6 +222,7 @@ impl RateProvider for MockRateProvider {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use atomicsettle_common::Currency;
     use rust_decimal_macros::dec;
 
     fn make_test_rate(base: &str, quote: &str, bid: Decimal, ask: Decimal) -> FxRate {

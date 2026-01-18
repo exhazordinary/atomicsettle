@@ -1,7 +1,5 @@
 //! Simulation scenarios.
 
-use std::time::Duration;
-
 use serde::{Deserialize, Serialize};
 
 /// A simulation scenario.

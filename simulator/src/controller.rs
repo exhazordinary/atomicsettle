@@ -9,7 +9,7 @@ use rust_decimal::Decimal;
 use tokio::sync::RwLock;
 use tracing::{info, warn};
 
-use atomicsettle_common::{Currency, Money, ParticipantId, SettlementId};
+use atomicsettle_common::{Currency, Money, SettlementId};
 
 use crate::bank::{BankFactory, SimulatedBank};
 use crate::metrics::SimulationMetrics;
@@ -92,8 +92,6 @@ impl SimulationController {
         info!("Running simulation in continuous mode");
 
         *self.running.write().await = true;
-
-        let start = std::time::Instant::now();
 
         // Spawn settlement generator
         let banks = self.banks.clone();
@@ -246,6 +244,7 @@ impl SimulationController {
     }
 
     /// Stop the simulation.
+    #[allow(dead_code)]
     pub async fn stop(&self) {
         *self.running.write().await = false;
     }

@@ -5,7 +5,7 @@ use std::sync::Arc;
 use dashmap::DashMap;
 use parking_lot::RwLock;
 use tokio::sync::mpsc;
-use tracing::{info, warn, error, instrument};
+use tracing::{info, error, instrument};
 
 use atomicsettle_common::{
     AtomicSettleError, ParticipantId, Result, Settlement, SettlementId, SettlementStatus,
@@ -59,6 +59,7 @@ pub enum SettleResponse {
 /// The main coordinator that orchestrates settlements.
 pub struct Coordinator {
     /// Configuration.
+    #[allow(dead_code)]
     config: CoordinatorConfig,
     /// Node ID for this coordinator instance.
     node_id: String,
@@ -77,6 +78,7 @@ pub struct Coordinator {
     /// Shutdown signal sender.
     shutdown_tx: mpsc::Sender<()>,
     /// Shutdown signal receiver.
+    #[allow(dead_code)]
     shutdown_rx: Arc<RwLock<Option<mpsc::Receiver<()>>>>,
 }
 
@@ -361,6 +363,7 @@ mod tests {
         CoordinatorConfig::default()
     }
 
+    #[allow(dead_code)]
     fn create_test_request() -> SettleRequest {
         SettleRequest {
             settlement_id: SettlementId::new(),

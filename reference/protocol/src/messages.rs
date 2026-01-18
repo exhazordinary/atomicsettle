@@ -3,7 +3,7 @@
 //! These types represent the messages exchanged between participants
 //! and the coordinator in the AtomicSettle protocol.
 
-use atomicsettle_common::{Currency, Money, ParticipantId, SettlementId};
+use atomicsettle_common::{Money, ParticipantId, SettlementId};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;

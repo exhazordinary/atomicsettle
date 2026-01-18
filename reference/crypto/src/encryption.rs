@@ -26,7 +26,7 @@ pub struct EncryptedPayload {
 /// * `key` - 32-byte encryption key
 /// * `plaintext` - Data to encrypt
 /// * `aad` - Additional authenticated data (not encrypted, but authenticated)
-pub fn encrypt(key: &[u8; 32], plaintext: &[u8], aad: Option<&[u8]>) -> Result<EncryptedPayload> {
+pub fn encrypt(key: &[u8; 32], plaintext: &[u8], _aad: Option<&[u8]>) -> Result<EncryptedPayload> {
     let cipher = Aes256Gcm::new_from_slice(key)
         .map_err(|e| CryptoError::EncryptionFailed(e.to_string()))?;
 
@@ -52,7 +52,7 @@ pub fn encrypt(key: &[u8; 32], plaintext: &[u8], aad: Option<&[u8]>) -> Result<E
 /// * `key` - 32-byte encryption key
 /// * `payload` - Encrypted payload to decrypt
 /// * `aad` - Additional authenticated data (must match what was used during encryption)
-pub fn decrypt(key: &[u8; 32], payload: &EncryptedPayload, aad: Option<&[u8]>) -> Result<Vec<u8>> {
+pub fn decrypt(key: &[u8; 32], payload: &EncryptedPayload, _aad: Option<&[u8]>) -> Result<Vec<u8>> {
     if payload.algorithm != "AES-256-GCM" {
         return Err(CryptoError::DecryptionFailed(format!(
             "Unsupported algorithm: {}",

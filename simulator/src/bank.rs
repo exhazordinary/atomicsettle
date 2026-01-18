@@ -2,10 +2,8 @@
 
 use std::sync::Arc;
 
-use rand::Rng;
 use rust_decimal::Decimal;
 use tokio::sync::RwLock;
-use tracing::info;
 
 use atomicsettle_common::{Currency, Money, ParticipantId};
 
@@ -14,6 +12,7 @@ pub struct SimulatedBank {
     /// Bank identifier.
     pub id: ParticipantId,
     /// Bank name.
+    #[allow(dead_code)]
     pub name: String,
     /// Current balances by currency.
     balances: Arc<RwLock<std::collections::HashMap<Currency, Decimal>>>,
@@ -44,6 +43,7 @@ impl SimulatedBank {
     }
 
     /// Get balance for currency.
+    #[allow(dead_code)]
     pub async fn get_balance(&self, currency: &Currency) -> Decimal {
         self.balances
             .read()
@@ -87,22 +87,18 @@ impl SimulatedBank {
     }
 
     /// Get count of sent settlements.
+    #[allow(dead_code)]
     pub async fn sent_count(&self) -> usize {
         self.settlements_sent.read().await.len()
     }
 
     /// Get count of received settlements.
+    #[allow(dead_code)]
     pub async fn received_count(&self) -> usize {
         self.settlements_received.read().await.len()
     }
 }
 
-/// Generate random settlement amount.
-pub fn random_amount(rng: &mut impl Rng, min: Decimal, max: Decimal) -> Decimal {
-    let range = max - min;
-    let random: f64 = rng.gen();
-    min + range * Decimal::from_f64_retain(random).unwrap_or(Decimal::ZERO)
-}
 
 /// Bank factory for creating test banks.
 pub struct BankFactory;

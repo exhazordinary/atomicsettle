@@ -1,13 +1,9 @@
 //! Core ledger engine implementation.
 
-use std::sync::Arc;
-
 use rust_decimal::Decimal;
 use tracing::{info, instrument};
 
-use atomicsettle_common::{AccountId, Currency, Money, Result, Settlement, SettlementId};
-
-use crate::account::Account;
+use atomicsettle_common::{AccountId, Currency, Result, Settlement, SettlementId};
 use crate::balance::AccountBalance;
 use crate::journal::{EntryType, JournalEntry};
 
@@ -199,7 +195,7 @@ impl LedgerEngine {
     /// Get journal entries for a settlement.
     pub async fn get_settlement_entries(
         &self,
-        settlement_id: SettlementId,
+        _settlement_id: SettlementId,
     ) -> Result<Vec<JournalEntry>> {
         // In a real implementation, query from database
         Ok(Vec::new())
@@ -227,7 +223,7 @@ impl Default for LedgerEngine {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use atomicsettle_common::{ParticipantId, SettlementLeg};
+    use atomicsettle_common::{Money, ParticipantId, SettlementLeg};
 
     fn create_test_settlement() -> Settlement {
         let leg = SettlementLeg::new(

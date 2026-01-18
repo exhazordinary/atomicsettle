@@ -8,7 +8,7 @@ use tracing::{debug, info, instrument};
 use uuid::Uuid;
 
 use crate::cache::{RateCache, RateCacheConfig};
-use crate::conversion::{Conversion, ConversionRequest, RateSide};
+use crate::conversion::{Conversion, ConversionRequest};
 use crate::error::{FxError, FxResult};
 use crate::provider::RateProvider;
 use crate::rate_lock::{RateLock, RateLockConfig, RateLockManager};

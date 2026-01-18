@@ -7,7 +7,7 @@ use tracing::{info, warn, instrument};
 
 use atomicsettle_common::{
     AtomicSettleError, Balance, Currency, Money, ParticipantId, Result, Settlement,
-    SettlementId, SettlementStatus,
+    SettlementId,
 };
 
 use crate::config::ParticipantConfig;
@@ -210,7 +210,7 @@ impl ParticipantClient {
     }
 
     /// Register callback for incoming settlements.
-    pub fn on_incoming<F>(&self, callback: F)
+    pub fn on_incoming<F>(&self, _callback: F)
     where
         F: Fn(Settlement) + Send + Sync + 'static,
     {

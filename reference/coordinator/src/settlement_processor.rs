@@ -15,8 +15,10 @@ use crate::participant_manager::{ParticipantManager, ParticipantNotification};
 /// Settlement processor handles the settlement lifecycle.
 pub struct SettlementProcessor {
     /// Lock manager.
+    #[allow(dead_code)]
     lock_manager: Arc<LockManager>,
     /// Participant manager.
+    #[allow(dead_code)]
     participant_manager: Arc<ParticipantManager>,
 }
 
@@ -53,6 +55,7 @@ impl SettlementProcessor {
     }
 
     /// Validate a settlement.
+    #[allow(dead_code)]
     async fn validate(&self, settlement: &mut Settlement) -> Result<()> {
         info!(
             settlement_id = %settlement.id,
@@ -79,7 +82,7 @@ impl SettlementProcessor {
             }
         }
 
-        settlement.transition_to(SettlementStatus::Validated).map_err(|e| {
+        settlement.transition_to(SettlementStatus::Validated).map_err(|_| {
             AtomicSettleError::InvalidTransition {
                 from: settlement.status,
                 to: SettlementStatus::Validated,
@@ -90,13 +93,14 @@ impl SettlementProcessor {
     }
 
     /// Acquire locks from all source participants.
+    #[allow(dead_code)]
     async fn acquire_locks(&self, settlement: &mut Settlement) -> Result<()> {
         info!(
             settlement_id = %settlement.id,
             "Acquiring locks"
         );
 
-        settlement.transition_to(SettlementStatus::Locking).map_err(|e| {
+        settlement.transition_to(SettlementStatus::Locking).map_err(|_| {
             AtomicSettleError::InvalidTransition {
                 from: settlement.status,
                 to: SettlementStatus::Locking,
@@ -146,7 +150,7 @@ impl SettlementProcessor {
 
         while tokio::time::Instant::now() < deadline {
             if self.lock_manager.are_all_locks_confirmed(&settlement.id) {
-                settlement.transition_to(SettlementStatus::Locked).map_err(|e| {
+                settlement.transition_to(SettlementStatus::Locked).map_err(|_| {
                     AtomicSettleError::InvalidTransition {
                         from: settlement.status,
                         to: SettlementStatus::Locked,
@@ -164,13 +168,14 @@ impl SettlementProcessor {
     }
 
     /// Execute atomic commit.
+    #[allow(dead_code)]
     async fn commit(&self, settlement: &mut Settlement) -> Result<()> {
         info!(
             settlement_id = %settlement.id,
             "Committing settlement"
         );
 
-        settlement.transition_to(SettlementStatus::Committing).map_err(|e| {
+        settlement.transition_to(SettlementStatus::Committing).map_err(|_| {
             AtomicSettleError::InvalidTransition {
                 from: settlement.status,
                 to: SettlementStatus::Committing,
@@ -187,7 +192,7 @@ impl SettlementProcessor {
         // Mark locks as consumed
         self.lock_manager.consume_locks_for_settlement(&settlement.id);
 
-        settlement.transition_to(SettlementStatus::Committed).map_err(|e| {
+        settlement.transition_to(SettlementStatus::Committed).map_err(|_| {
             AtomicSettleError::InvalidTransition {
                 from: settlement.status,
                 to: SettlementStatus::Committed,
@@ -198,6 +203,7 @@ impl SettlementProcessor {
     }
 
     /// Notify participants of settlement completion.
+    #[allow(dead_code)]
     async fn notify_completion(&self, settlement: &mut Settlement) -> Result<()> {
         info!(
             settlement_id = %settlement.id,
@@ -222,7 +228,7 @@ impl SettlementProcessor {
         }
 
         // Mark as settled (acknowledgment is fire-and-forget)
-        settlement.transition_to(SettlementStatus::Settled).map_err(|e| {
+        settlement.transition_to(SettlementStatus::Settled).map_err(|_| {
             AtomicSettleError::InvalidTransition {
                 from: settlement.status,
                 to: SettlementStatus::Settled,
@@ -233,6 +239,7 @@ impl SettlementProcessor {
     }
 
     /// Handle settlement failure.
+    #[allow(dead_code)]
     async fn handle_failure(&self, settlement: &mut Settlement, error: &AtomicSettleError) {
         error!(
             settlement_id = %settlement.id,
@@ -273,6 +280,7 @@ impl SettlementProcessor {
 }
 
 /// Convert error to failure code.
+#[allow(dead_code)]
 fn error_to_failure_code(error: &AtomicSettleError) -> FailureCode {
     match error {
         AtomicSettleError::Timeout(_) => FailureCode::LockTimeout,
@@ -297,7 +305,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_processor_creation() {
-        let processor = create_test_processor();
+        let _processor = create_test_processor();
         // Just verify it creates successfully
         assert!(true);
     }

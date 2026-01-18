@@ -133,7 +133,7 @@ impl Signature {
     /// Create from hex string.
     pub fn from_hex(hex_str: &str, key_id: impl Into<String>) -> Result<Self> {
         let bytes =
-            hex::decode(hex_str).map_err(|e| CryptoError::InvalidSignature)?;
+            hex::decode(hex_str).map_err(|_| CryptoError::InvalidSignature)?;
 
         Ok(Self {
             bytes,

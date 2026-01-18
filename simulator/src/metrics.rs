@@ -57,16 +57,19 @@ impl SimulationMetrics {
     }
 
     /// Get p50 latency.
+    #[allow(dead_code)]
     pub fn p50_latency_ms(&self) -> u64 {
         self.percentile_latency(50)
     }
 
     /// Get p99 latency.
+    #[allow(dead_code)]
     pub fn p99_latency_ms(&self) -> u64 {
         self.percentile_latency(99)
     }
 
     /// Get percentile latency.
+    #[allow(dead_code)]
     fn percentile_latency(&self, percentile: usize) -> u64 {
         if self.latency_samples.is_empty() {
             return 0;
@@ -80,6 +83,7 @@ impl SimulationMetrics {
     }
 
     /// Get success rate.
+    #[allow(dead_code)]
     pub fn success_rate(&self) -> f64 {
         if self.total_settlements == 0 {
             return 0.0;
@@ -89,6 +93,7 @@ impl SimulationMetrics {
     }
 
     /// Get throughput (settlements per second).
+    #[allow(dead_code)]
     pub fn throughput(&self, duration_secs: u64) -> f64 {
         if duration_secs == 0 {
             return 0.0;
